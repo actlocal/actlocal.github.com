@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+
+    <!-- Mobile IE allows us to activate ClearType technology for smoothing fonts for easy reading -->
+    <meta http-equiv="cleartype" content="on">
+  	    
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="stylesheets/vonnegut.css?v=1">
+   
+
+    <script id="bio_template" type="text/x-handlebars-template">
+      {{#bio}}
+      <div class='bio_container'>
+        <div class='bio_name'>
+          {{name}}
+        </div>
+        <div class='bio_image'>
+          <img src='{{image}}'>
+        </div>
+        <div class='bio_text'>
+          {{{bio}}}
+        </div>
+        <div class='bio_homepage'>
+          {{#if homepage}}
+          <a href='{{homepage}}'>Homepage</a>
+          {{/if}}
+        </div>
+      </div>
+      {{/bio}}        
+    </script>
+    
+    <script type="text/javascript" charset="utf-8">
+    	function onBodyLoad()
+    	{		
+    		document.addEventListener("deviceready",onDeviceReady,false);
+
+        var bio;
+        $.getJSON('data_feeds/bio.json', function(data) {
+          bio = ALMMiscUtils.decodeUrisIn(data, "image","name","bio","homepage");
+          var source   = $("#bio_template").html();
+          var template = Handlebars.compile(source);
+          $("#content-placeholder").html(template({ bio: bio }));
+        });
+
+    	}
+    	
+    	/* When this function is called, PhoneGap has been initialized and is ready to roll */
+    	/* If you are supporting your own protocol, the var invokeString will contain any arguments to the app launch.
+    	see http://iphonedevelopertips.com/cocoa/launching-your-own-application-via-a-custom-url-scheme.html
+    	for more details -jm */
+    	function onDeviceReady()
+    	{
+    	}    
+    </script>
+
+
+    <script type="text/javascript" charset="utf-8">
+      
+      function load_blog_detail(json_snippet)
+      {
+        
+        if (PhoneGap.available)
+        {
+          window.plugins.almPlugin.navControllerNavigate("blog_detail.html?art="+json_snippet);            
+        } else {
+          window.location.href="blog_detail.html?art="+json_snippet;
+        }
+      }
+    </script>
+
+  </head>
+  <body class='nocallout' onload="onBodyLoad()">
+    <div id="content-placeholder">
+    </div>
+    <script type="text/javascript" charset="utf-8" src="javascripts/jquery.js"></script>
+    <!-- scripts concatenated and minified via ant build script; mobile boilerplate -->
+    <script src="javascripts/boilerplate-helper.js"></script>
+    <!-- end concatenated and minified scripts-->
+    
+    <script>
+      // iPhone Scale Bug Fix, read this when using http://www.blog.highub.com/mobile-2/a-fix-for-iphone-viewport-scale-bug/
+      MBP.scaleFix();
+      
+    </script>  
+  
+  	<script type="text/javascript" charset="utf-8" src="javascripts/phonegap.js"></script>
+  	<script type="text/javascript" charset="utf-8" src="javascripts/almplugin.js"></script>
+    <script type="text/javascript" charset="utf-8" src="javascripts/handlebars.js"></script>
+    <script type="text/javascript" charset="utf-8" src="javascripts/miscutils.js"></script>
+
+
+  </body>
+</html>

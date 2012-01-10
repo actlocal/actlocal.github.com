@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+
+    <!-- Mobile IE allows us to activate ClearType technology for smoothing fonts for easy reading -->
+    <meta http-equiv="cleartype" content="on">
+  	    
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="stylesheets/vonnegut.css?v=1">
+   
+    <script id="social_entry_template" type="text/x-handlebars-template">
+      <ul class='social_entries_list'>
+        {{#social_list}}
+          <li class='social_entry_li'>
+            <div class='social_entry_container'>
+              <div class='social_entry_metadata'>
+                <div class='social_entry_metadata_icon'>
+                  <img src='{{service_icon}}'>
+                </div>
+                <div class='social_entry_metadata_timestamp'>
+                  {{prettyDate}}
+                </div>
+                <div class='social_entry_metadata_via_container'>
+                  <div class='social_entry_metadata_via'>via</div>
+                  {{#if service_twitter}}
+                    <div class='social_entry_metadata_via_twitter'></div>
+                  {{/if}}
+                  {{#if service_facebook}}
+                    <div class='social_entry_metadata_via_facebook'></div>
+                  {{/if}}
+                </div>
+              </div>
+              <div class='social_entry_content'>
+                {{#if service_twitter}}
+                  <div class='social_entry_content_message_type'>
+                    <p>{{{linkifiedText}}}</p>
+                  </div>
+                {{/if}}
+                {{#if service_facebook}}
+                  {{#if status_type}}
+                    <div class='social_entry_content_message_type'>
+                      <p>{{{linkifiedMessage}}}</p>
+                    </div>
+                  {{/if}}
+                  {{#if link_type}}
+                    <div class='social_entry_content_link_type'>
+                      <div class='social_entry_content_link_headline'>likes a link:<a href='{{link}}'> {{text}}</a></div>
+                      <div class='social_entry_content_link_image'>
+                        <a href='{{link}}'><img src='{{picture}}'></a>
+                      </div>
+                      <div class='social_entry_content_link_name'>
+                        <a href='{{link}}'>{{name}}</a>
+                      </div>
+                      <div class='social_entry_content_link_description'><br>{{description}}</div>
+                    </div>
+                  {{/if}}
+                {{/if}}
+              </div>
+            </div>
+          </li>
+        {{/social_list}}
+      </ul>
+    </script>
+    
+    <script type="text/javascript" charset="utf-8">
+    	function onBodyLoad()
+    	{		
+    		document.addEventListener("deviceready",onDeviceReady,false);
+
+        var social_items;
+        $.getJSON('data_feeds/social_list.json', function(data) {
+          social_items = data;
+          
+          for (var i = 0 ; i < social_items.length; i++)
+          {
+            social_items[i].prettyDate = ALMMiscUtils.prettyDate(social_items[i].timestamp);
+            social_items[i] = ALMMiscUtils.decodeUrisIn(social_items[i], "text","message");
+
+            if (social_items[i].service_twitter)
+            {
+              social_items[i].linkifiedText = ALMMiscUtils.linkify(social_items[i].text);
+            }
+            
+            if (social_items[i].service_facebook)
+            {
+              social_items[i].linkifiedMessage = ALMMiscUtils.linkify(social_items[i].message)
+            }
+          }
+
+          
+          var source   = $("#social_entry_template").html();
+          var template = Handlebars.compile(source);
+          $("#content-placeholder").html(template({ social_list: social_items }));
+        });
+
+    	}
+    	
+    	/* When this function is called, PhoneGap has been initialized and is ready to roll */
+    	/* If you are supporting your own protocol, the var invokeString will contain any arguments to the app launch.
+    	see http://iphonedevelopertips.com/cocoa/launching-your-own-application-via-a-custom-url-scheme.html
+    	for more details -jm */
+    	function onDeviceReady()
+    	{
+    	}    
+    </script>
+
+
+  </head>
+  <body class='nocallout' onload="onBodyLoad()">
+    <div id="content-placeholder">
+    </div>
+    
+    <script type="text/javascript" charset="utf-8" src="javascripts/jquery.js"></script>
+    <!-- scripts concatenated and minified via ant build script; mobile boilerplate -->
+    <script src="javascripts/boilerplate-helper.js"></script>
+    <!-- end concatenated and minified scripts-->
+    
+    <script>
+      // iPhone Scale Bug Fix, read this when using http://www.blog.highub.com/mobile-2/a-fix-for-iphone-viewport-scale-bug/
+      MBP.scaleFix();
+    </script>
+    
+  	<script type="text/javascript" charset="utf-8" src="javascripts/phonegap.js"></script>
+  	<script type="text/javascript" charset="utf-8" src="javascripts/almplugin.js"></script>
+    <script type="text/javascript" charset="utf-8" src="javascripts/handlebars.js"></script>
+    <script type="text/javascript" charset="utf-8" src="javascripts/miscutils.js"></script>
+
+  </body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+
+    <!-- Mobile IE allows us to activate ClearType technology for smoothing fonts for easy reading -->
+    <meta http-equiv="cleartype" content="on">
+  	
+    
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="stylesheets/vonnegut.css?v=1">
+   
+    <script type="text/javascript" charset="utf-8" src="javascripts/jquery.js"></script>
+    <!-- scripts concatenated and minified via ant build script; mobile boilerplate -->
+    <script src="javascripts/boilerplate-helper.js"></script>
+    <!-- end concatenated and minified scripts-->
+    
+    <script>
+      // iPhone Scale Bug Fix, read this when using http://www.blog.highub.com/mobile-2/a-fix-for-iphone-viewport-scale-bug/
+      MBP.scaleFix();
+    </script>
+  
+  	<script type="text/javascript" charset="utf-8" src="javascripts/phonegap.js"></script>
+  	<script type="text/javascript" charset="utf-8" src="javascripts/almplugin.js"></script>
+    <script type="text/javascript" charset="utf-8" src="javascripts/handlebars.js"></script>
+
+    <script type="text/javascript" charset="utf-8" src="javascripts/miscutils.js"></script>
+
+    <script id="storefront_list_template" type="text/x-handlebars-template">
+      <ul class='store_entries_list'>
+        {{#storefront_list}}
+        <li class='store_entry_li'>
+          <a href='#' onclick='load_storefront_detail("{{detail}}");'>          
+            <div class='store_entry_container'>
+              <div class='store_entry_image'>
+                <img height='85' src='{{{cover}}}'>
+              </div>
+              <div class='store_entry_text'>
+                <div class='store_entry_text_title'>
+                  <p>{{title}}</p>
+                </div>
+                <div class='store_entry_text_pub_date'>
+                  <p>{{pub_date}}</p>
+                </div>
+                <div class='store_entry_text_format'>
+                  <p>{{format}}</p>
+                </div>
+                <div class='store_entry_text_description'>
+                  <p>{{{description}}}</p>
+                </div>
+              </div>
+              <div class='store_entry_arrow'>
+              </div>
+
+<!--
+            {{title}}<br>
+            {{author_list}}<br>
+            {{format}}<br>
+            {{publisher}}<br>
+            {{cover}}<br>
+            {{pub_date}}<br>
+            {{detail}}<br> -->
+            
+            </div>
+          </a>
+        </li>
+          {{/storefront_list}}
+      </ul>
+    </script>
+    
+    <script type="text/javascript" charset="utf-8">
+    	function onBodyLoad()
+    	{		
+    		document.addEventListener("deviceready",onDeviceReady,false);
+
+        var storefront_list;
+        $.getJSON('data_feeds/storefront_list.json', function(data) {
+          storefront_list = data;
+          
+          for (var i = 0 ; i < storefront_list.length; i++)
+          {
+            // don't decode cover because there's an embedded url in one of the params
+            storefront_list[i] = ALMMiscUtils.decodeUrisIn(storefront_list[i],"title","description");
+          }
+
+          
+          var source   = $("#storefront_list_template").html();
+          var template = Handlebars.compile(source);
+          $("#content-placeholder").html(template({ storefront_list: storefront_list }));
+        });
+        
+
+    	}
+    	
+    	/* When this function is called, PhoneGap has been initialized and is ready to roll */
+    	/* If you are supporting your own protocol, the var invokeString will contain any arguments to the app launch.
+    	see http://iphonedevelopertips.com/cocoa/launching-your-own-application-via-a-custom-url-scheme.html
+    	for more details -jm */
+    	function onDeviceReady()
+    	{
+    	}    
+    </script>
+
+
+    <script type="text/javascript" charset="utf-8">
+      
+      function load_storefront_detail(json_snippet)
+      {
+        
+        if (PhoneGap.available)
+        {
+          window.plugins.almPlugin.navControllerNavigate("storefront_detail.html?d="+json_snippet);            
+        } else {
+          window.location.href="storefront_detail.html?d="+json_snippet;
+        }
+      }
+    </script>
+
+  </head>
+  <body class='nocallout' onload="onBodyLoad()">
+    <div id="content-placeholder">
+    </div>
+
+    
+  </body>
+</html>

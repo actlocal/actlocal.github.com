@@ -1,0 +1,1336 @@
+/**
+ * HTML5 ✰ Boilerplate
+ *
+ * style.css contains a reset, font normalization and some base styles.
+ *
+ * Credit is left where credit is due.
+ * Much inspiration was taken from these projects:
+ * - yui.yahooapis.com/2.8.1/build/base/base.css
+ * - camendesign.com/design/
+ * - praegnanz.de/weblog/htmlcssjs-kickstart
+ */
+
+
+/**
+ * html5doctor.com Reset Stylesheet (Eric Meyer's Reset Reloaded + HTML5 baseline)
+ * v1.6.1 2010-09-17 | Authors: Eric Meyer & Richard Clark
+ * html5doctor.com/html-5-reset-stylesheet/
+ */
+
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+blockquote, q { quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after { content: ""; content: none; }
+
+ins { background-color: #ff9; color: #000; text-decoration: none; }
+
+mark { background-color: #ff9; color: #000; font-style: italic; font-weight: bold; }
+
+del { text-decoration: line-through; }
+
+abbr[title], dfn[title] { border-bottom: 1px dotted; cursor: help; }
+
+table { border-collapse: collapse; border-spacing: 0; }
+
+hr { display: block; height: 1px; border: 0; border-top: 1px solid #ccc; margin: 1em 0; padding: 0; }
+
+input, select { vertical-align: middle; }
+
+
+
+/**
+ * Font normalization inspired by YUI Library's fonts.css: developer.yahoo.com/yui/
+ */
+
+
+body { font:13px/1.231 sans-serif; *font-size:small; } /* Hack retained to preserve specificity */
+select, input, textarea, button { font:99% sans-serif; }
+
+/* Normalize monospace sizing:
+   en.wikipedia.org/wiki/MediaWiki_talk:Common.css/Archive_11#Teletype_style_fix_for_Chrome */
+pre, code, kbd, samp { font-family: monospace, sans-serif; }
+
+
+/**
+ * Minimal base styles.
+ */
+
+/* Prevent mobile zooming while remain desktop zooming: github.com/shichuan/mobile-html5-boilerplate/issues/closed#issue/14 */
+html { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; } 
+
+/* Accessible focus treatment: people.opera.com/patrickl/experiments/keyboard/test */
+a:hover, a:active { outline: none; }
+
+ul, ol { margin-left: 2em; }
+ol { list-style-type: decimal; }
+
+/* Remove margins for navigation lists */
+nav ul, nav li { margin: 0; list-style:none; list-style-image: none; }
+
+small { font-size: 85%; }
+strong, th { font-weight: bold; }
+
+td { vertical-align: top; }
+
+/* Set sub, sup without affecting line-height: gist.github.com/413930 */
+sub, sup { font-size: 75%; line-height: 0; position: relative; }
+sup { top: -0.5em; }
+sub { bottom: -0.25em; }
+
+pre {
+  /* www.pathf.com/blogs/2008/05/formatting-quoted-code-in-blog-posts-css21-white-space-pre-wrap/ */
+  white-space: pre; white-space: pre-wrap; word-wrap: break-word;
+  padding: 15px;
+}
+
+textarea { overflow: auto; } /* www.sitepoint.com/blogs/2010/08/20/ie-remove-textarea-scrollbars/ */
+
+.iem7 legend { margin-left: -7px; }
+
+/* Align checkboxes, radios, text inputs with their label by: Thierry Koblentz tjkdesign.com/ez-css/css/base.css  */
+input[type="radio"] { vertical-align: text-bottom; }
+input[type="checkbox"] { vertical-align: bottom; }
+.iem7 input[type="checkbox"] { vertical-align: baseline; }
+
+/* Hand cursor on clickable input elements */
+label, input[type="button"], input[type="submit"], input[type="image"], button { cursor: pointer; }
+
+/* Webkit browsers add a 2px margin outside the chrome of form elements */
+button, input, select, textarea { margin: 0; }
+
+/* Colors for form validity */
+input:valid, textarea:valid   {  }
+input:invalid, textarea:invalid {
+   border-radius: 1px; -moz-box-shadow: 0px 0px 5px red; -webkit-box-shadow: 0px 0px 5px red; box-shadow: 0px 0px 5px red;
+}
+.no-boxshadow input:invalid, .no-boxshadow textarea:invalid { background-color: #f0dddd; }
+
+
+/* These selection declarations have to be separate
+   No text-shadow: twitter.com/miketaylr/status/12228805301
+   Also: hot pink! FF5E99 */
+::-moz-selection{ background: #94b1bf; color:#fff; text-shadow: none; }
+::selection { background: #94b1bf; color:#fff; text-shadow: none; }
+
+/* j.mp/webkit-tap-highlight-color */
+a:link { -webkit-tap-highlight-color: #94b1bf; }
+
+/* Make buttons play nice in IE:
+   www.viget.com/inspire/styling-the-button-element-in-internet-explorer/ */
+button {  width: auto; overflow: visible; }
+
+/* Bicubic resizing for non-native sized IMG:
+   code.flickr.com/blog/2008/11/12/on-ui-quality-the-little-things-client-side-image-resizing/ */
+.iem7 img { -ms-interpolation-mode: bicubic; }
+
+
+/**
+ * You might tweak these..
+ */
+
+body, select, input, textarea {
+  /* #444 looks better than black: twitter.com/H_FJ/statuses/11800719859 */
+  color: #444;
+  font-family: HelveticaNeue, Arial, Helvetica;
+  /* Set your base font here, to apply evenly */
+  /* font-family: Georgia, serif;  */
+}
+
+/* Headers (h1, h2, etc) have no default font-size or margin; define those yourself */
+h1, h2, h3, h4, h5, h6 { font-weight: bold; }
+
+a, a:active, a:visited { color: #607890; }
+a:hover { color: #036; }
+
+
+/* 
+ * Helper classes 
+ */
+ 
+/* prevent callout */
+.nocallout {-webkit-touch-callout: none;}
+
+/* Text overflow with ellipsis */
+.ellipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* A hack for HTML5 contenteditable attribute on mobile */
+textarea.contenteditable {-webkit-appearance: none;}
+
+/* A workaround for S60 3.x and 5.0 devices which do not animated gif images if they have been set as display: none */
+.gifhidden {position: absolute; left: -100%;}
+
+/* For image replacement */
+.ir { display: block; text-indent: -999em; overflow: hidden; background-repeat: no-repeat; text-align: left; direction: ltr; }
+
+/* Hide for both screenreaders and browsers:
+   css-discuss.incutio.com/wiki/Screenreader_Visibility */
+.hidden { display: none; visibility: hidden; }
+
+/* Hide only visually, but have it available for screenreaders: by Jon Neal.
+  www.webaim.org/techniques/css/invisiblecontent/  &  j.mp/visuallyhidden */
+.visuallyhidden { border: 0; clip: rect(0 0 0 0); height: 1px; margin: -1px; overflow: hidden; padding: 0; position: absolute; width: 1px; }
+/* Extends the .visuallyhidden class to allow the element to be focusable when navigated to via the keyboard: drupal.org/node/897638 */
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus { clip: auto; height: auto; margin: 0; overflow: visible; position: static; width: auto; }
+
+/* Hide visually and from screenreaders, but maintain layout */
+.invisible { visibility: hidden; }
+
+/* The Magnificent Clearfix: Updated to prevent margin-collapsing on child elements.
+   j.mp/bestclearfix */
+.clearfix:before, .clearfix:after { content: "\0020"; display: block; height: 0; overflow: hidden; }
+.clearfix:after { clear: both; }
+/* Fix clearfix: blueprintcss.lighthouseapp.com/projects/15318/tickets/5-extra-margin-padding-bottom-of-page */
+.clearfix { zoom: 1; }
+
+
+/* Primary Styles for mobile
+   Author:
+*/
+
+body {
+	background: url(../images/vonnegut/background.gif) no-repeat fixed;
+	background-size: 100%;
+	-webkit-background-size: 100%;
+	min-height: 480px;
+}
+
+/* blog_list */
+ul.blog_entries_list {
+	list-style: none;
+	margin: 0;
+}
+
+li.blog_entry_li {
+	background: url(../images/vonnegut/line_horiz.png) repeat-x left bottom;
+}
+
+li.blog_entry_li a {
+	text-decoration: none;
+}
+
+.blog_entry_container {
+	height: 80px;
+	overflow: hidden;
+}
+
+.blog_list_date {
+	float: left;
+	height: 78px;
+	width: 62px;
+	text-align: center;
+	background: url(../images/vonnegut/blog_list_date.png);
+	text-shadow: 0 2px white;
+}
+
+.blog_list_date_month {
+	position: relative;
+	top: 14px;
+	font-size: 13px;
+	font-weight: bold;
+	color: #ab5b00;
+}
+
+.blog_list_date_day {
+	position: relative;
+	top: 13px;
+	font-size: 36px;
+	font-weight: bold;
+	color: #3f1800;
+	margin-top: -4px;
+}
+
+.blog_list_text {
+	height: 80px;
+	padding-right: 15px;
+}
+
+.blog_list_text_title {
+	font-size: 17px;
+	font-weight: bold;
+	color: #3f1800;
+	height: 21px;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+	padding-left: 10px;
+	padding-top: 10px;
+}
+
+.blog_list_text_snippet {
+	font-size: 14px;
+	color: #ab5b00;
+	margin-top: 3px;
+	height: 34px;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	padding-left: 10px;
+}
+
+.blog_list_text_arrow {
+	position: relative;
+	float: right;
+	bottom: 33px;
+	left: 12px;
+	height: 13px;
+	width: 8px;
+	background: url(../images/vonnegut/list_arrow.png) no-repeat;
+}
+
+/* blog_detail */
+.blog_detail_heading {
+	height: 106px;
+	margin: 0 auto;
+}
+
+.blog_detail_date {
+	float: left;
+	width: 60px;
+	height: 100%;
+	background: url(../images/vonnegut/blog_detail_date.png) no-repeat;
+	background-size: 100%;
+	text-align: center;
+	text-shadow: 0 2px white;
+}
+
+.blog_detail_date_month {
+	position: relative;
+	top: 12px;
+	font-size: 13px;
+	font-weight: bold;
+	color: #ab5b00;
+}
+
+.blog_detail_date_day {
+	position: relative;
+	top: 12px;
+	font-size: 36px;
+	font-weight: bold;
+	color: #3f1800;
+	margin-top: -4px;
+}
+
+.blog_detail_date_tod {
+	position: relative;
+	top: 13px;
+	font-size: 10px;
+	color: #cd985d;
+	margin-top: -4px;
+}
+
+.blog_detail_info {
+	height: 102px;
+	background: url(../images/vonnegut/blog_detail_header.png) repeat-x;
+	margin-left: 60px;
+}
+
+.blog_detail_title {
+	font-size: 16px;
+	font-weight: bold;
+	color: #3f1800;
+	padding-top: 10px;
+	padding-left: 10px;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	
+	height: 57px;
+	min-height: 57px;
+}
+
+.blog_detail_byline {
+	font-size: 10px;
+	color: #ab5a00;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;	
+	position: relative;
+	left: 10px;
+	top: 5px;
+	width: 240px;
+	text-transform: capitalize;
+}
+
+.blog_body {
+	max-width: 100% !important;
+	color: #3f1800;
+	margin: 0 20px 0 20px;
+	overflow: hidden;
+	font-size: 16px;
+	line-height: 19px;
+}
+
+.blog_body img {
+	max-width: 80% !important;
+	width: auto; height: auto;
+}
+
+.blog_body p {
+	margin-bottom: 15px;
+}
+
+.blog_body ul {
+	margin: 15px;
+}
+
+/* social_list */
+ul.social_entries_list {
+	list-style: none;
+	margin: 0;
+}
+
+li.social_entry_li {
+	background: url(../images/vonnegut/line_horiz.png) repeat-x left bottom;
+}
+
+.social_entry_container {
+	padding: 10px;
+	overflow: hidden;
+	background: url(../images/vonnegut/social_metadata_divider.png) no-repeat 80px;
+}
+
+.social_entry_metadata {
+	float: left;
+	width: 70px;
+	text-align: center;
+	font-size: 10px;
+	color: #cc9a5d;
+	text-shadow: 0 2px white;
+}
+
+.social_entry_metadata img {
+	max-width: 30px !important;
+	width: auto; height: auto;
+}
+
+.social_entry_metadata_via {
+	padding-right: 6px;
+	padding-top: 2px;
+	vertical-align: sub;
+}
+.social_entry_metadata_via_twitter {
+	width: 10px;
+	height: 8px;
+	background: url(../images/vonnegut/via_t.png) no-repeat;
+	float: right;
+	margin-top: -9px;
+	margin-right: 20px;
+}
+
+.social_entry_metadata_via_facebook {
+	width: 10px;
+	height: 8px;
+	background: url(../images/vonnegut/via_f.png) no-repeat;
+	float: right;
+	margin-top: -9px;
+	margin-right: 20px;
+}
+
+.social_entry_content {
+	overflow: hidden;
+	padding-left: 20px;
+	font-size: 14px;
+	color: #ab5a00;
+}
+
+.social_entry_content a {
+	text-decoration: none;
+	color: #3f1800;
+}
+.social_entry_content_link_type div {
+	margin-bottom: 2px;
+}
+
+/* bio */
+.bio_container {
+	overflow: hidden;
+}
+
+.bio_container a {
+	text-decoration: none;
+	color: #ab5a00;
+}
+
+.bio_name {
+	font-size: 22px;
+	font-weight: bold;
+	padding: 10px 0 20px 20px;
+	color: #3f1800;
+}
+
+.bio_image {
+	height: 208px;
+	overflow: hidden;
+	margin-bottom: 20px;
+}
+
+/*
+.bio_image img {
+	height: 208px;
+	width: auto;
+}
+*/
+
+.bio_image img {
+	height: auto;
+	width: 320px;
+}
+
+
+.bio_text {
+	font-size: 16px;
+	color: #3f1800;
+	margin: 10px 20px 20px 20px;
+}
+
+.bio_text b {
+	font-weight: bolder;
+}
+
+.bio_text strong {
+	font-weight: bolder;
+}
+
+.bio_text i {
+	font-style: italic;
+}
+
+.bio_text em {
+	font-style: italic;
+}
+
+.bio_homepage {
+	margin: 20px;
+}
+
+/* storefront_list */
+ul.store_entries_list {
+	list-style: none;
+	margin: 0;
+}
+
+li.store_entry_li {
+	background: url(../images/vonnegut/line_horiz.png) repeat-x left bottom;
+}
+
+li.store_entry_li a {
+	text-decoration: none;
+}
+
+.store_entry_container {
+	min-height: 120px;
+	max-height: 175px;
+	overflow: hidden;
+}
+
+.store_entry_image {
+	float: left;
+	height: 110px;
+	width: 80px;
+	overflow: hidden;
+}
+
+.store_entry_image img {
+	padding-top: 15px;
+	padding-left: 15px;
+}
+
+.store_entry_text {
+	overflow: hidden;
+	color: #3f1800;
+	font-size: 14px;
+	padding-right: 20px;
+}
+
+.store_entry_text_title {
+	font-size: 16px;
+	font-weight: bold;
+	height: 39px;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;	
+	margin-top: 11px;
+	padding-right: 5px;
+}
+
+.store_entry_text_pub_date {
+	font-size: 12px;
+	font-weight: bold;
+	color: #ab5a00;
+	margin: 6px 0 6px 0;
+}
+
+.store_entry_text_format {
+  font-size: 12px;
+  font-weight: bold;
+  margin: 6px 0 6px 0;
+}
+
+.store_entry_text_description {
+	font-size: 14px;
+	height: 68px;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 4;
+	-webkit-box-orient: vertical;
+
+	margin-bottom: 20px;
+}
+
+.store_entry_arrow {
+	height: 13px;
+	width: 8px;
+	position: relative;
+	float: right;
+	bottom: 90px;
+	right: 4px;
+	background: url(../images/vonnegut/list_arrow.png) no-repeat;
+}
+
+/* storefront_detail */
+ul.store_detail {
+	margin: 0;
+}
+
+.store_detail_item_info {
+	height: 140px;
+	background: url(../images/vonnegut/store_detail_item_info_bg.png) repeat-x;
+	overflow: hidden;
+	border-bottom: 1px solid #000000;
+	box-shadow: 1px 2px #cfcfcf;
+}
+
+.store_detail_item_info_image {
+	float: left;
+	width: 90px;
+	height: 120px;
+	overflow: hidden;
+        padding-left: 15px;
+        padding-top: 15px;
+}
+
+.store_detail_item_info_text {
+	overflow: hidden;
+	font-size: 12px;
+	color: #ab5900;
+        padding-top: 7px;
+}
+
+/* direct descendents only */
+.store_detail_item_info_text > p {
+	padding-bottom: 4px;
+}
+
+.store_detail_item_info_text_title {
+	overflow: hidden;
+	text-overflow:ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;	
+	font-size: 12pt;
+	font-weight: bold;
+	color: #3f1800;
+	height: 35px;
+	padding-top: 5px;
+	padding-bottom: 3px;
+}
+
+.store_detail_item_info_text_pubdate {
+	font-weight: bold;
+	padding-bottom: 14px;
+	text-shadow: 0 2px white;
+}
+
+.store_detail_item_details {
+	font-size: 14px;
+	color: #3f1800;
+	line-height: 17px;
+}
+
+.store_detail_buy_now {
+	margin-top: -1px;
+}
+
+.store_detail_item_description {
+	margin-top: 15px;
+	padding: 0 15px 20px 15px;
+}
+
+.store_detail_item_reviews_label {
+	background: url(../images/vonnegut/reviews.gif) no-repeat;
+	height: 30px;
+}
+
+.store_detail_item_details ul {
+	list-style: none;
+	margin: 15px; /* not sure why we need to redeclare this */
+}
+
+.store_detail_item_details li {
+	padding-bottom: 18px;
+}
+
+.store_detail_item_reviews_name {
+	font-weight: bold;
+	text-shadow: 0 2px white;
+	color: #ab5900;
+	padding-bottom: 4px;
+}
+
+/* storefront_multibuy */
+.store_detail_multibuy_item_info {
+	height: 140px;
+	background: url(../images/vonnegut/store_detail_multibuy_item_info_bg.gif) no-repeat;
+	overflow: hidden;
+	padding: 15px;
+}
+
+ul.store_detail_multibuy {
+	list-style: none;
+	margin: 0;
+}
+
+ul.store_detail_multibuy a {
+	text-decoration: none;
+}
+
+ul.store_detail_multibuy li {
+	background: url(../images/vonnegut/line_horiz.png) repeat-x left bottom;
+}
+
+ul.store_detail_multibuy p {
+	color: #3f1800;
+	font-size: 18px;
+	font-weight: bold;
+	padding-top: 8px;
+}
+
+ul.store_detail_multibuy div {
+	height: 43px;
+	padding-left: 15px;
+	overflow: hidden;
+}
+
+.store_entry_multibuy_arrow {
+	float: right;
+	position: relative;
+	bottom: 30px;
+	left: -10px;
+	background: url(../images/vonnegut/list_arrow.png) no-repeat;
+}
+
+/* event_list */
+ul.event_list {
+	list-style: none;
+	color: #3f1800;
+	overflow: hidden;
+	margin-left: 0;
+}
+
+ul.event_list a {
+	text-decoration: none;
+	color: #3f1800;
+}
+
+li.event_list_month {
+	overflow: hidden;
+}
+
+div.event_list_month {
+	height: 30px;
+	background: url(../images/vonnegut/event_list_month_bg.gif);
+	color: #ab5900;
+	font-weight: bold;
+	text-shadow: 0 1px white;
+	text-align: center;
+}
+
+div.event_list_month p {
+	padding-top: 6px;
+}
+
+ul.event_list_month {
+	margin-left: 0;
+	list-style: none;
+	overflow: hidden;
+}
+
+li.event_list_month_entry {
+	background: url(../images/vonnegut/line_horiz.png) repeat-x left bottom;
+}
+
+div.event_list_entry_day {
+	height: 59px;
+	width: 60px;
+	background: url(../images/vonnegut/event_list_day_bg.gif) no-repeat;
+	font-weight: bold;
+	font-size: 36px;
+	text-align: center;
+	overflow: hidden;
+	float: left;
+}
+
+div.event_list_entry_day p {
+	padding-top: 6px;
+	padding-right: 2px;
+}
+
+div.event_list_entry_title_container {
+	height: 60px;
+}
+
+div.event_list_entry_title {
+	height: 40px;
+	font-weight: bold;
+	font-size: 15px;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+	padding-right: 10px;
+}
+
+div.event_list_entry_title p {
+	padding-left:15px;
+	padding-top: 18px;
+}
+
+div.event_list_entry_arrow {
+	background: url(../images/vonnegut/list_arrow.png) no-repeat;
+	height: 13px;
+	width: 8px;
+	float: right;
+	position: relative;
+	bottom: 20px;
+	right: 10px;
+}
+
+/* event_detail */
+/* note that some text doesn't look like it lines up properly in desktop browsers.  I don;t know why, but the pixel measurements here work properly on device.  When in doubt, test on a device. */
+div.event_detail_header {
+	height: 90px;
+	color: #3f1800;
+	font-weight: bold;
+}
+
+div.event_detail_date {
+	float: left;
+	width: 60px;
+	text-align: center;
+	background-image: url(../images/vonnegut/event_detail_date.png);
+	height: 90px;
+}
+
+div.event_detail_month {
+	font-size: 13px;
+	color: #ab5a00;
+	text-shadow: 0 1px white;
+	margin-top: 15px;
+	line-height: 6px;
+}
+
+div.event_detail_day {
+    font-size: 36px;
+}
+
+div.event_detail_title_container {
+    overflow: hidden;
+    height: 90px;
+    position: relative;
+    background-image: url(../images/vonnegut/event_detail_header.png);
+}
+
+div.event_detail_title {
+    font-size: 16px;
+    height: 42px;
+    margin-top: 15px;
+    margin-left: 10px;
+    overflow: hidden;
+	text-overflow:ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+}
+
+div.event_detail_rounded_box {
+    border: 1px solid #cc9a5d;
+    background-color: #ffffff;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    font-size: 14px;
+}
+
+div.event_detail_time {
+    height: 44px;
+    margin: 8px 8px 0 8px;
+}
+
+div.event_detail_label {
+    width: 80px;
+    min-height: 30px;
+    overflow: hidden;
+    float: left;
+    text-align: right;
+    margin-right: 10px;
+    padding-top: 14px;
+}
+
+div.event_detail_time_when {
+    padding-top: 14px;
+    font-weight: bold;
+    color: #ab5900;
+}
+
+div.event_detail_where {
+    margin: 15px 8px 0 8px;
+    overflow: hidden;
+}
+
+div.event_detail_where a {
+    text-decoration: none;
+}
+
+div.event_detail_where a:hover {
+    text-decoration: none;
+    color: red;
+}
+
+
+div.event_detail_where_name {
+    font-weight: bold;
+    padding-top: 15px;
+    color: #ab5900;    
+}
+
+div.event_detail_where_address {
+    color: #ab5900;    
+    clear: both;
+    padding-left: 89px;
+    margin-right: 30px;
+    overflow: hidden;
+}
+
+div.event_detail_where_arrow {
+    background: url(../images/vonnegut/list_arrow.png) no-repeat;
+    height: 13px;
+    width: 8px;
+    float: right;
+    position: relative;
+    top: -33px;
+    right: 10px;
+}
+
+div.event_detail_text {
+    margin: 15px 8px 0 8px;
+    overflow: hidden;    
+}
+
+div.event_detail_content {
+    color: #ab5900;
+    overflow: hidden;
+    margin-right: 15px;
+    padding-top: 14px;
+}
+
+/* event_detail_map */
+#event_detail_map {
+
+}
+
+
+/* photo_list */
+ul.photo_list {
+    list-style: none;
+    margin-left: 5px;
+    overflow: hidden;
+}
+
+ul.photo_list li {
+    display: inline-block;
+    overflow: hidden;
+    width: 74px;
+    height: 74px;
+    min-height: 74px;
+    max-height: 74px;
+    text-align:center;
+    margin: 4px 0 2px 0;
+    -webkit-box-shadow: 3px 3px 7px #777;
+    box-shadow: 3px 3px 7px #777;
+    vertical-align:middle !important; /* above they set vertical-align to baseline, which sometimes causes the li items to layout funny.  This fixes it */
+}
+
+ul.photo_list li img {
+    max-width: 71px !important;
+    max-height: 71px !important
+    width: auto; height: auto;
+    vertical-align: middle;
+    overflow: hidden;
+}
+
+/* photo_detail */
+div.photo_detail_container {
+    margin: 10px;
+}
+
+div.photo_detail_container img {
+    -webkit-box-shadow: 3px 3px 7px #777;
+    box-shadow: 3px 3px 7px #777;
+}
+
+div.photo_item_text {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+div.photo_item_caption {
+    color: #3f1800;
+    font-size: 18px;
+}
+
+div.photo_item_date {
+    color: #cc995d;
+    font-size: 12px;
+}
+
+/* about */
+#about_content {
+	margin: 10px;
+}
+#about_content h2 {
+	color: #3f1800;
+	font-size: 18px;
+	margin-bottom: 10px;
+}
+
+#about_content p {
+	color: #ab5900;
+	font-size: 16px;
+	line-height: 21px;
+	margin-bottom: 10px;
+}
+
+#about_visit_button {
+	display: table;
+	height: 44px;
+	width: 100%;
+	text-align: center;
+	font-size: 18px;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+/* gradient */
+#about_visit_button {
+	background: #4c270c; /* Old browsers */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#a65509), color-stop(44%,#743c04), color-stop(100%,#4c270c)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #a65509 0%,#743c04 44%,#4c270c 100%); /* Chrome10+,Safari5.1+ */
+	background: -ms-linear-gradient(top, #a65509 0%,#743c04 44%,#4c270c 100%); /* IE10+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a65509', endColorstr='#4c270c',GradientType=0 ); /* IE6-9 */
+	background: linear-gradient(top, #a65509 0%,#743c04 44%,#4c270c 100%); /* W3C */
+}
+
+#about_visit_button p {
+	display: table-cell;
+	vertical-align: middle;
+	color: #fdfdfd;
+	overflow: hidden;	
+	text-overflow: hidden;
+}
+
+#about_push {
+	display: table;
+	height: 44px;
+	width: 100%;
+	font-size: 18px;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	background: #ffffff;
+	border: 1px solid #cc9a5d;
+}
+
+#about_push p {
+	display: table-cell;
+	vertical-align: middle;
+	font-weight: bold;
+	color: #3f1800;
+	padding-left: 20px;
+}
+
+#about_push span {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+/* video */
+ul.video_entries_list {
+	list-style:  none;
+	margin-left: 0px;
+}
+
+ul.video_entries_list a {
+	text-decoration: none;
+}
+
+ul.video_entries_list li {
+	height: 88px;
+	max-height: 88px;
+	overflow: hidden;
+	background: url(../images/vonnegut/line_horiz.png) repeat-x left bottom;
+}
+
+div.video_entry_image {
+	float: left;
+	clear: left;
+}
+
+div.video_entry_text {
+	margin-left: 105px;
+	padding-top: 12px;
+	padding-right: 15px;
+}
+
+div.video_entry_text_title {
+	color: #3f1800;
+	font-size: 17px;
+	font-weight: bold;
+	height: 21px;
+	max-height: 21px;
+	overflow: hidden;
+}
+
+div.video_entry_text_subtitle {
+	color: #ab5a00;
+	font-size: 14px;
+	font-weight: bold;
+	height: 17px;
+	max-height: 17px;
+	overflow: hidden;
+}
+
+div.video_entry_text_metadata {
+	color: #cc915d;
+	font-size: 12px;
+	font-weight: bold;
+	height: 14px;
+	max-height: 14px;
+	overflow: hidden;
+}
+
+div.video_entry_arrow {
+	height: 13px;
+	width: 8px;
+	position: relative;
+	top: -28px;
+	right: 5px;
+	background: url(../images/vonnegut/list_arrow.png) no-repeat;	
+	float: right;
+}
+
+/* video detail */
+div.video_detail_container {
+}
+
+div.video_detail_title {
+	color: #3f1800;
+	font-size: 17px;
+	font-weight: bold;
+	margin: 10px 20px;
+}
+
+div.video_detail_subtitle {
+	color: #ab5a00;
+	font-size: 14px;
+	font-weight: bold;
+	margin: 10px 20px;
+}
+
+/* podcasts */
+ul.podcast_entries_list {
+	list-style:  none;
+	margin-left: 0px;
+}
+
+ul.podcast_entries_list a {
+	text-decoration: none;
+}
+
+ul.podcast_entries_list li {
+	height: 88px;
+	max-height: 88px;
+	overflow: hidden;
+	background: url(../images/vonnegut/line_horiz.png) repeat-x left bottom;
+}
+
+div.podcast_entry_image {
+	float: left;
+	clear: left;
+}
+
+div.podcast_entry_text {
+	margin-left: 105px;
+	padding-top: 12px;
+}
+
+div.podcast_entry_text_title {
+	color: #3f1800;
+	font-size: 17px;
+	font-weight: bold;
+	height: 21px;
+	max-height: 21px;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+}
+
+div.podcast_entry_text_subtitle {
+	color: #ab5a00;
+	font-size: 14px;
+	font-weight: bold;
+	height: 17px;
+	max-height: 17px;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+}
+
+div.podcast_entry_text_metadata {
+	color: #cc915d;
+	font-size: 12px;
+	font-weight: bold;
+	height: 14px;
+	max-height: 14px;
+	overflow: hidden;
+}
+
+div.podcast_entry_arrow {
+	height: 13px;
+	width: 8px;
+	position: relative;
+	bottom: 29px;
+	right: 4px;
+	float: right;
+	background: url(../images/vonnegut/list_arrow.png) no-repeat;	
+}
+
+/* podcast detail */
+div.podcast_detail_container a {
+	text-decoration: none;
+}
+
+div.podcast_detail_container a p {
+	margin: 10px 20px;
+	color: #3f1800;	
+}
+
+div.podcast_detail_title {
+	color: #3f1800;
+	font-size: 17px;
+	font-weight: bold;
+	margin: 10px 20px;
+}
+
+div.podcast_detail_thumb {
+	margin: 10px 20px;
+}
+
+
+div.podcast_detail_subtitle {
+	color: #ab5a00;
+	font-size: 14px;
+	font-weight: bold;
+	margin: 10px 20px;
+}
+
+/* saved articles */
+div#no_saved {
+	font-weight: bold;
+	font-size: 16px;
+	margin-top: 20px;
+	text-align: center;
+}
+
+a.delete-a-tag {
+	text-decoration: none;
+}
+
+div#delete-saved-item
+{
+	height: 60px;
+	padding-top: 15px;
+	background: url(../images/vonnegut/saved_item_delete_bg.gif) repeat-x;
+	color: #ab5900;
+	font-size: 20px;
+	font-weight: bold;
+	text-shadow: 0 1px white;
+	text-align: center;
+}
+/*
+ * Media queries for responsive design https://github.com/shichuan/mobile-html5-boilerplate/wiki/The-Style
+ */
+
+
+/* Styles for desktop and large screen ----------- */
+
+/*styles for 800px and up!*/
+@media only screen and (min-width: 800px) {
+  /* Styles */
+}/*/mediaquery*/
+
+
+/* iPhone 4, Opera Mobile 11 and other high pixel ratio devices ----------- */
+@media
+only screen and (-webkit-min-device-pixel-ratio: 1.5),
+only screen and (-o-min-device-pixel-ratio: 3/2),
+only screen and (min-device-pixel-ratio: 1.5) {
+  /* Styles */
+}

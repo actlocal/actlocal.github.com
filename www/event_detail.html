@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+
+    <!-- Mobile IE allows us to activate ClearType technology for smoothing fonts for easy reading -->
+    <meta http-equiv="cleartype" content="on">
+  	    
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="stylesheets/vonnegut.css?v=1">
+   
+    <script type="text/javascript" charset="utf-8" src="javascripts/jquery.js"></script>
+    <!-- scripts concatenated and minified via ant build script; mobile boilerplate -->
+    <script src="javascripts/boilerplate-helper.js"></script>
+    <!-- end concatenated and minified scripts-->
+    
+    <script>
+      // iPhone Scale Bug Fix, read this when using http://www.blog.highub.com/mobile-2/a-fix-for-iphone-viewport-scale-bug/
+      MBP.scaleFix();
+    </script>
+  
+  	<script type="text/javascript" charset="utf-8" src="javascripts/phonegap.js"></script>
+  	<script type="text/javascript" charset="utf-8" src="javascripts/almplugin.js"></script>
+    <script type="text/javascript" charset="utf-8" src="javascripts/handlebars.js"></script>
+    <script type="text/javascript" charset="utf-8" src="javascripts/miscutils.js"></script>
+    
+
+
+    <script id="event_detail_template" type="text/x-handlebars-template">
+        {{#event_detail}}
+          <div class='event_detail_container'>
+            <div class='event_detail_header'>
+              <div class='event_detail_date'>
+                <div class='event_detail_month'>{{month}}</div>
+                <div class='event_detail_day'>{{day}}</div>
+              </div>
+              <div class='event_detail_title_container'>
+                <div class='event_detail_title'><p>{{{title}}}</p></div>
+              </div>
+            </div>
+            <div class='event_detail_info'>
+              <div class='event_detail_time event_detail_rounded_box'>
+                <div class='event_detail_label'>When</div>
+                <div class='event_detail_time_when'><p>{{when}}</p></div>
+              </div>
+	            {{#if where}}
+              <div class='event_detail_where event_detail_rounded_box'>
+                <div class='event_detail_label'>Where</div>
+                {{#with where}}
+                  <a href="#" onclick='load_event_detail_map();'>
+                  <div class='event_detail_where_name'><p>{{name}}</p></div>
+                  <div class='event_detail_where_address'><p>{{street}}<br>
+                  {{#if street2}}
+                    {{street2}}<br>
+                  {{/if}}
+                  {{#if city}}
+                    {{city}},
+                  {{/if}}
+                  {{state}} {{post}}</p></div>
+                  {{#unless street2}}
+                    <br> <!-- cheating to fix a layout bug with arrow placement when theres no street2 line -->
+                  {{/unless}}
+                {{/with}}     
+                <div class='event_detail_where_arrow'></div>
+                </a>
+              </div>
+     	        {{/if}}
+              {{#if text}}
+                <div class='event_detail_text event_detail_rounded_box'>
+                  <div class='event_detail_label'>Details</div>
+                  <div class='event_detail_content'><p>{{{text}}}</p><br></div>
+                </div>
+              {{/if}}
+            </div>
+          </div>
+        {{/event_detail}}
+      </ul>
+    </script>
+    
+    <script type="text/javascript" charset="utf-8">
+    	function onBodyLoad()
+    	{		
+    	  window.alm_sharable = {};
+
+    		document.addEventListener("deviceready",onDeviceReady,false);
+        
+        var event_detail_path = $.getQueryParam('d');
+        if (event_detail_path.indexOf("http") == 0)
+          ;
+        else
+          event_detail_path = "data_feeds/"+event_detail_path;
+          
+        var event_detail;
+        $.getJSON(event_detail_path, function(data) {
+          event_detail = ALMMiscUtils.decodeUrisIn(data, "title", "text");
+          event_detail.where = ALMMiscUtils.decodeUrisIn(event_detail.where, "name", "street", "city", "state", "post")                    
+
+          // shorten some month names so they fit properly          
+          if (event_detail.month == "September")
+            event_detail.month = "Sept";
+          if (event_detail.month == "November")
+            event_detail.month = "Nov";
+          if (event_detail.month == "December")
+            event_detail.month = "Dec";
+
+					// some events come through with null titles
+					if (event_detail.title === null || event_detail.title === undefined || event_detail.title === "")
+					{
+						event_detail.title = event_detail.where.name;
+					}
+          
+          window.alm_sharable.sharableTitle = event_detail.title;
+
+          window.alm_sharable.sharableUnixtime = event_detail.unixtime;
+          // we grab the text later on so we can take the innerText from the DOM and prepend it to this.
+      	  if (event_detail.where)
+      	  {
+	          window.alm_sharable.sharableLocation = event_detail.where.name;
+	          window.alm_sharable.sharableAdditionalInfo = "\n\n" + event_detail.where.name + "\n" + event_detail.where.street + "\n" + event_detail.where.city + " " + event_detail.where.state + " " + event_detail.where.post + "\n";
+          }
+          
+          var source   = $("#event_detail_template").html();
+          var template = Handlebars.compile(source);
+          $("#content-placeholder").html(template({ event_detail: event_detail }));
+        });
+
+
+
+    	}
+    	
+    	/* When this function is called, PhoneGap has been initialized and is ready to roll */
+    	/* If you are supporting your own protocol, the var invokeString will contain any arguments to the app launch.
+    	see http://iphonedevelopertips.com/cocoa/launching-your-own-application-via-a-custom-url-scheme.html
+    	for more details -jm */
+    	function onDeviceReady()
+    	{
+    	  var inner = $('.event_detail_content')[0].innerText; // grab the innerText of the event detail so we strip html from it
+    	
+        window.plugins.almPlugin.setupSharableContent(window.plugins.almPlugin.ALMSharableEvent, "unused", window.alm_sharable.sharableTitle, window.alm_sharable.sharableUnixtime, window.alm_sharable.sharableLocation, inner+window.alm_sharable.sharableAdditionalInfo);
+
+    	}    
+    	
+    	
+    </script>
+
+    <script type="text/javascript" charset="utf-8">
+      
+      function load_event_detail_map()
+      {       
+      
+        var event_detail_path = $.getQueryParam('d');
+ 
+        if (PhoneGap.available)
+        {
+          window.plugins.almPlugin.navControllerNavigate("event_detail_map.html?d="+event_detail_path);            
+        } else {
+          window.location.href="event_detail_map.html?d="+event_detail_path;
+        }
+      }
+    </script>
+
+  </head>
+  <body class='nocallout' onload="onBodyLoad()">
+    <div id="content-placeholder">
+    </div>
+  </body>
+</html>

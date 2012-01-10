@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+
+    <!-- Mobile IE allows us to activate ClearType technology for smoothing fonts for easy reading -->
+    <meta http-equiv="cleartype" content="on">
+    
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="stylesheets/vonnegut.css?v=1">
+   
+
+    <script type="text/javascript" charset="utf-8" src="javascripts/jquery.js"></script>
+    <!-- scripts concatenated and minified via ant build script; mobile boilerplate -->
+    <script src="javascripts/boilerplate-helper.js"></script>
+    <!-- end concatenated and minified scripts-->
+    
+    <script>
+      // iPhone Scale Bug Fix, read this when using http://www.blog.highub.com/mobile-2/a-fix-for-iphone-viewport-scale-bug/
+      MBP.scaleFix();
+    </script>
+  	<script type="text/javascript" charset="utf-8" src="javascripts/phonegap.js"></script>
+  	<script type="text/javascript" charset="utf-8" src="javascripts/almplugin.js"></script>
+    <script type="text/javascript" charset="utf-8" src="javascripts/handlebars.js"></script>
+    <script type="text/javascript" charset="utf-8" src="javascripts/miscutils.js"></script>
+    
+
+
+    <script id="storefront_detail_template" type="text/x-handlebars-template">
+      <ul class='store_detail'>
+        {{#storefront_detail}}
+          <div class="store_detail_container">
+            <div class="store_detail_item_info">
+              <div class="store_detail_item_info_image">
+                <img height='80' src='{{{cover}}}'>
+              </div>
+              <div class='store_detail_item_info_text'>
+                <div class='store_detail_item_info_text_title'><p>{{title}}</p></div>
+                <div class='store_detail_item_info_text_pubdate'><p>{{pub_date}}</p></div>
+                <p>{{publisher}}</p>
+                <p>{{format}}</p>
+              </div>
+            </div>
+            <div class='store_detail_item_details'>
+              {{#unless remove_purchase_links}}
+                {{#if multibuy}}
+                  <a href='#' onclick='load_storefront_multibuy();'><div class='store_detail_buy_now'></div></a>
+                {{else}}
+                    <a href='{{buylink}}'><div class='store_detail_buy_now'><center><img src='images/vonnegut/buy_now_arrow.png'></center></div></a>
+                {{/if}}
+              {{/unless}}
+              <div class='store_detail_item_description'>
+                <p>{{{description}}}</p>
+              </div>
+              {{#if reviews}}
+                <div class='store_detail_item_reviews_label'></div>
+              {{/if}}
+              <div class='store_detail_item_reviews_block'>
+                <ul>
+                {{#each reviews}}
+                  <li>
+                    <div class='store_detail_item_reviews_name'><p>{{name}}</p></div>
+                    <div class='store_detail_item_reviews_text'><p>&#8220;{{text}}&#8221;</p></div>
+                  </li>
+                {{/each}}
+                </ul>
+              </div>
+            </div>
+          </div>
+
+        {{/storefront_detail}}
+      </ul>
+    </script>
+    
+    <script type="text/javascript" charset="utf-8">
+    	function onBodyLoad()
+    	{		
+    		document.addEventListener("deviceready",onDeviceReady,false);
+        
+        var storefront_detail_path = $.getQueryParam('d');
+        
+        var storefront_detail;
+        $.getJSON('data_feeds/'+storefront_detail_path, function(data) {
+          storefront_detail = data;
+          
+          // don't decode cover because there's an embedded url in it
+          storefront_detail = ALMMiscUtils.decodeUrisIn(data,"title","description","author_list","publisher")
+
+          storefront_detail.multibuy = false;
+          if(storefront_detail.purchase_links.length > 1)
+          {
+            storefront_detail.multibuy = true;
+          } else {
+            storefront_detail.buylink = storefront_detail.purchase_links[0].link;
+          }
+
+          if (storefront_detail.ios_remove_purchase_links == true)
+          {
+            if (ALMMiscUtils.is_running_on_ios())
+            {
+              storefront_detail.remove_purchase_links = true;
+            }
+          }
+
+          var source   = $("#storefront_detail_template").html();
+          var template = Handlebars.compile(source);
+          $("#content-placeholder").html(template({ storefront_detail: storefront_detail }));
+        });
+        
+
+
+    	}
+    	
+    	/* When this function is called, PhoneGap has been initialized and is ready to roll */
+    	/* If you are supporting your own protocol, the var invokeString will contain any arguments to the app launch.
+    	see http://iphonedevelopertips.com/cocoa/launching-your-own-application-via-a-custom-url-scheme.html
+    	for more details -jm */
+    	function onDeviceReady()
+    	{
+    	}    
+    </script>
+
+    <script type="text/javascript" charset="utf-8">
+      
+      function load_storefront_multibuy(json_snippet)
+      {
+        var storefront_detail_path = $.getQueryParam('d');
+
+        if (PhoneGap.available)
+        {
+          window.plugins.almPlugin.navControllerNavigate("storefront_detail_multibuy.html?d="+storefront_detail_path);            
+        } else {
+          window.location.href="storefront_detail_multibuy.html?d="+storefront_detail_path;
+        }
+      }
+    </script>
+
+
+
+  </head>
+  <body class='nocallout' onload="onBodyLoad()">
+    <div id="content-placeholder">
+    </div>
+  </body>
+</html>

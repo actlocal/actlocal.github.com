@@ -1,0 +1,121 @@
+{
+    "blog": {
+        "tabTitle":"Articles",
+        "tabIcon":"images/vonnegut/tab_icons/blog.png",
+				"page":"blog_list.html",
+				"auto_tune_detail_page":"blog_detail.html?d=",
+				"showsNavigationBar":true,
+        "navigationBarTint":"#5e361a",
+				"navigationBarIcon":"images/vonnegut/navbar_icons/blog.gif"
+    },
+    "social": {
+        "tabTitle":"Updates",
+        "tabIcon":"images/vonnegut/tab_icons/social.png",
+				"page":"social_list.html",
+				"showsNavigationBar":true,
+        "navigationBarTint":"#5e361a",
+				"navigationBarIcon":"images/vonnegut/navbar_icons/social.gif"
+    },
+    "bio": {
+        "tabTitle":"Bio",
+        "page":"bio.html",
+        "tabIcon":"images/vonnegut/tab_icons/bio.png",
+        "showsNavigationBar":true,
+        "navigationBarTint":"#5e361a",
+        "navigationBarIcon":"images/vonnegut/navbar_icons/bio.gif"
+    },
+    "storefront": {
+        "tabTitle":"Storefront",
+        "tabIcon":"images/vonnegut/tab_icons/storefront.png",
+        "page":"storefront_list.html",
+				"auto_tune_detail_page":"storefront_detail.html?d=",
+        "showsNavigationBar":true,
+        "navigationBarTint":"#5e361a",
+        "navigationBarIcon":"images/vonnegut/navbar_icons/storefront.gif"
+    },
+    "events": {
+        "tabTitle":"Events",
+        "tabIcon":"images/vonnegut/tab_icons/events.png",
+        "page":"event_list.html",
+				"auto_tune_detail_page":"event_detail.html?d=",
+        "showsNavigationBar":true,
+        "navigationBarTint":"#5e361a",
+        "navigationBarIcon":"images/vonnegut/navbar_icons/events.gif"
+    },
+    "meetupmap": {
+        "tabTitle":"Event Map",
+        "tabIcon":"images/vonnegut/tab_icons/events.png",
+        "page":"event_list_map.html",
+        "showsNavigationBar":true,
+        "navigationBarTint":"#5e361a",
+        "navigationBarIcon":"images/vonnegut/navbar_icons/events.gif"
+    },    
+    "photos": {
+        "tabTitle":"Photos",
+        "tabIcon":"images/vonnegut/tab_icons/photos.png",
+        "page":"photo_list.html",
+				"auto_tune_detail_page":"photo_detail.html?d=",
+        "showsNavigationBar":true,
+        "navigationBarTint":"#5e361a",
+        "navigationBarIcon":"images/vonnegut/navbar_icons/photos.gif"
+    },
+    "videos": {
+        "tabTitle":"Videos",
+        "tabIcon":"images/vonnegut/tab_icons/videos.png",
+        "page":"video_list.html",
+				"auto_tune_detail_page":"video_detail.html?d=",
+        "showsNavigationBar":true,
+        "navigationBarTint":"#5e361a",
+        "navigationBarIcon":"images/vonnegut/navbar_icons/videos.png"
+    },
+    "podcasts": {
+        "tabTitle":"Podcasts",
+        "tabIcon":"images/vonnegut/tab_icons/podcasts.png",
+        "page":"podcast_list.html",
+				"auto_tune_detail_page":"podcast_detail.html?d=",        
+        "showsNavigationBar":true,
+        "navigationBarTint":"#5e361a",
+        "navigationBarIcon":"images/vonnegut/navbar_icons/podcasts.gif"
+    },
+    "saved": {
+        "tabTitle":"Saved",
+        "tabIcon":"images/vonnegut/tab_icons/saved.png",
+        "page":"saved_list.html",
+        "showsNavigationBar":true,
+        "navigationBarTint":"#5e361a",
+        "navigationBarIcon":"images/vonnegut/navbar_icons/saved.png"    
+    },
+    "about": {
+        "tabTitle":"About",
+        "tabIcon":"images/vonnegut/tab_icons/about.png",
+        "page":"about.html",
+        "showsNavigationBar":true,
+        "navigationBarTint":"#5e361a",
+        "navigationBarIcon":"images/vonnegut/navbar_icons/about.png"
+    },
+    
+    "appConfig": {
+      "moreTab": {
+        "navigationBarIcon":"images/vonnegut/navbar_icons/more.gif",
+        "navigationBarTint":"#5e361a"
+      },
+      "actionButton": {
+        "actionButtonIcon":"DEFAULT"
+      }
+    },
+    
+    "modules": [
+      "social",
+      "events",
+      "meetupmap",
+      "blog",
+      "storefront",
+      "photos",
+      "videos",
+      "podcasts",
+      "bio",
+      "saved",
+      "about"
+    ]
+    
+}

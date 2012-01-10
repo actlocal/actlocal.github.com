@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+
+    <!-- Mobile IE allows us to activate ClearType technology for smoothing fonts for easy reading -->
+    <meta http-equiv="cleartype" content="on">
+  	    
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="stylesheets/vonnegut.css?v=1">
+
+    <script type="text/javascript" charset="utf-8" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>    
+
+   
+
+    <script type="text/javascript" charset="utf-8" src="javascripts/jquery.js"></script>
+    <!-- scripts concatenated and minified via ant build script; mobile boilerplate -->
+    <script src="javascripts/boilerplate-helper.js"></script>
+    <!-- end concatenated and minified scripts-->
+    
+    <script>
+      // iPhone Scale Bug Fix, read this when using http://www.blog.highub.com/mobile-2/a-fix-for-iphone-viewport-scale-bug/
+      MBP.scaleFix();
+      
+    </script>
+  
+  
+  	<script type="text/javascript" charset="utf-8" src="javascripts/phonegap.js"></script>
+  	<script type="text/javascript" charset="utf-8" src="javascripts/almplugin.js"></script>
+    <script type="text/javascript" charset="utf-8" src="javascripts/handlebars.js"></script>
+    <script type="text/javascript" charset="utf-8" src="javascripts/miscutils.js"></script>
+
+
+    
+    <script type="text/javascript" charset="utf-8">
+    	function onBodyLoad()
+    	{		
+    		document.addEventListener("deviceready",onDeviceReady,false);
+       
+        var event_detail_path = $.getQueryParam('d');
+        if (event_detail_path.indexOf("http") == 0)
+          ;
+        else
+          event_detail_path = "data_feeds/"+event_detail_path;
+
+        var event_detail;
+        $.getJSON(event_detail_path, function(data) {
+          var latlng = new google.maps.LatLng(data.where.lat, data.where.lon);
+          var myOptions = {
+            zoom: 13,
+            center: latlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+          };
+
+  				$('#event_detail_map')[0].style.width=""+window.innerWidth+"px";
+  				$('#event_detail_map')[0].style.height=""+window.innerHeight+"px";
+
+          var map = new google.maps.Map(document.getElementById("event_detail_map"), myOptions);
+          var marker = new google.maps.Marker({
+                         position: latlng, 
+                         map: map, 
+                         animation: google.maps.Animation.DROP,
+                         title:data.where.name
+        	});
+        });
+      }
+    	
+    	/* When this function is called, PhoneGap has been initialized and is ready to roll */
+    	/* If you are supporting your own protocol, the var invokeString will contain any arguments to the app launch.
+    	see http://iphonedevelopertips.com/cocoa/launching-your-own-application-via-a-custom-url-scheme.html
+    	for more details -jm */
+    	function onDeviceReady()
+    	{
+    	}    
+    </script>
+
+  </head>
+  <body class='nocallout' onload="onBodyLoad()">
+    <div id="event_detail_map">
+    </div>
+  </body>
+</html>

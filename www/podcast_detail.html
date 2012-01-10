@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+
+    <!-- Mobile IE allows us to activate ClearType technology for smoothing fonts for easy reading -->
+    <meta http-equiv="cleartype" content="on">
+  	    
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="stylesheets/vonnegut.css?v=1">
+   
+    <script type="text/javascript" charset="utf-8" src="javascripts/jquery.js"></script>
+    <!-- scripts concatenated and minified via ant build script; mobile boilerplate -->
+    <script src="javascripts/boilerplate-helper.js"></script>
+    <!-- end concatenated and minified scripts-->
+    
+    <script>
+      // iPhone Scale Bug Fix, read this when using http://www.blog.highub.com/mobile-2/a-fix-for-iphone-viewport-scale-bug/
+      MBP.scaleFix();
+    </script>
+  
+  	<script type="text/javascript" charset="utf-8" src="javascripts/phonegap.js"></script>
+  	<script type="text/javascript" charset="utf-8" src="javascripts/almplugin.js"></script>
+    <script type="text/javascript" charset="utf-8" src="javascripts/handlebars.js"></script>
+    <script type="text/javascript" charset="utf-8" src="javascripts/miscutils.js"></script>
+    
+
+
+    <script id="podcast_detail_template" type="text/x-handlebars-template">
+        {{#podcast_detail}}
+          <div class='podcast_detail_container'>
+            <div class='podcast_detail_title'><p>{{title}}</p></div>
+            <div class='podcast_detail_player_container'>
+              <a href='#' onclick="launch_player('{{podcasturl}}');">
+                <div class='podcast_detail_thumb'>
+                  <img src='{{detail_thumbnail}}'>
+                </div>
+                <p>(Tap to Play)</p>
+              </a>
+            </div>
+            <div class='podcast_detail_subtitle'><p>{{{subtitle}}}</p></div>
+          </div>
+        {{/podcast_detail}}
+      </ul>
+    </script>
+    
+    <script type="text/javascript" charset="utf-8">
+    	function onBodyLoad()
+    	{		
+    		document.addEventListener("deviceready",onDeviceReady,false);
+        
+        var podcast_detail_path = $.getQueryParam('d');
+        
+        var podcast_detail;
+        $.getJSON('data_feeds/'+podcast_detail_path, function(data) {
+          podcast_detail = data;
+          
+          podcast_detail = ALMMiscUtils.decodeUrisIn(data,"title","subtitle")
+          
+          var source   = $("#podcast_detail_template").html();
+          var template = Handlebars.compile(source);
+          $("#content-placeholder").html(template({ podcast_detail: podcast_detail }));
+        });
+        
+    	}
+    	
+    	/* When this function is called, PhoneGap has been initialized and is ready to roll */
+    	/* If you are supporting your own protocol, the var invokeString will contain any arguments to the app launch.
+    	see http://iphonedevelopertips.com/cocoa/launching-your-own-application-via-a-custom-url-scheme.html
+    	for more details -jm */
+    	function onDeviceReady()
+    	{
+    	} 
+    	
+    	function launch_player(podcasturl)
+    	{
+        if (PhoneGap.available)
+        {
+          window.plugins.almPlugin.launchMoviePlayer(podcasturl);
+        } else {
+          window.location.href=podcasturl;
+        }
+    	}
+   
+    </script>
+
+
+
+  </head>
+  <body class='nocallout' onload="onBodyLoad()">
+    <div id="content-placeholder">
+    </div>
+  </body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+
+    <!-- Mobile IE allows us to activate ClearType technology for smoothing fonts for easy reading -->
+    <meta http-equiv="cleartype" content="on">
+  	
+    
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="stylesheets/vonnegut.css?v=1">
+   
+    <script type="text/javascript" charset="utf-8" src="javascripts/jquery.js"></script>
+    <!-- scripts concatenated and minified via ant build script; mobile boilerplate -->
+    <script src="javascripts/boilerplate-helper.js"></script>
+    <!-- end concatenated and minified scripts-->
+    
+    <script>
+      // iPhone Scale Bug Fix, read this when using http://www.blog.highub.com/mobile-2/a-fix-for-iphone-viewport-scale-bug/
+      MBP.scaleFix();
+    </script>
+  
+  	<script type="text/javascript" charset="utf-8" src="javascripts/phonegap.js"></script>
+  	<script type="text/javascript" charset="utf-8" src="javascripts/almplugin.js"></script>
+    <script type="text/javascript" charset="utf-8" src="javascripts/handlebars.js"></script>
+
+    <script type="text/javascript" charset="utf-8" src="javascripts/miscutils.js"></script>
+
+    <script id="video_list_template" type="text/x-handlebars-template">
+      <ul class='video_entries_list'>
+        {{#videos_list}}
+        <li>
+          <a href='#' onclick="load_video_detail('{{detail}}');">          
+            <div class='video_entry_container'>
+              <div class='video_entry_image'>
+                <img src='{{{thumbnail}}}'>
+              </div>
+              <div class='video_entry_text'>
+                <div class='video_entry_text_title'>
+                  <p>{{title}}</p>
+                </div>
+                <div class='video_entry_text_subtitle'>
+                  <p>{{subtitle}}</p>
+                </div>
+                <div class='video_entry_text_metadata'>
+                  <p>{{date}} | {{runtime}}</p>
+                </div>
+              </div>
+              <div class='video_entry_arrow'>
+              </div>
+            </div>
+          </a>
+        </li>
+        {{/videos_list}}
+      </ul>
+    </script>
+    
+    <script type="text/javascript" charset="utf-8">
+    	function onBodyLoad()
+    	{		
+    		document.addEventListener("deviceready",onDeviceReady,false);
+
+        var videos_list;
+        $.getJSON('data_feeds/videos_list.json', function(data) {
+          videos_list = data;
+          
+          for (var i = 0 ; i < videos_list.length; i++)
+          {
+            videos_list[i] = ALMMiscUtils.decodeUrisIn(videos_list[i],"title","subtitle");
+          }
+
+          
+          var source   = $("#video_list_template").html();
+          var template = Handlebars.compile(source);
+          $("#content-placeholder").html(template({ videos_list: videos_list }));
+        });
+        
+    	}
+    	
+    	/* When this function is called, PhoneGap has been initialized and is ready to roll */
+    	/* If you are supporting your own protocol, the var invokeString will contain any arguments to the app launch.
+    	see http://iphonedevelopertips.com/cocoa/launching-your-own-application-via-a-custom-url-scheme.html
+    	for more details -jm */
+    	function onDeviceReady()
+    	{
+    	}    
+    	
+    	
+      function load_video_detail(json_snippet)
+      {        
+        if (PhoneGap.available)
+        {
+          window.plugins.almPlugin.navControllerNavigate("video_detail.html?d="+json_snippet);
+        } else {
+          window.location.href="video_detail.html?d="+json_snippet;
+        }
+      }
+    </script>
+
+  </head>
+  <body class='nocallout' onload="onBodyLoad()">
+    <div id="content-placeholder">
+    </div>
+
+    
+  </body>
+</html>

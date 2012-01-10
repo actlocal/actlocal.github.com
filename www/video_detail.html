@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+
+    <!-- Mobile IE allows us to activate ClearType technology for smoothing fonts for easy reading -->
+    <meta http-equiv="cleartype" content="on">
+    
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="stylesheets/vonnegut.css?v=1">
+
+    <script type="text/javascript" charset="utf-8" src="javascripts/jquery.js"></script>
+    <!-- scripts concatenated and minified via ant build script; mobile boilerplate -->
+    <script src="javascripts/boilerplate-helper.js"></script>
+    <!-- end concatenated and minified scripts-->
+    
+    <script>
+      // iPhone Scale Bug Fix, read this when using http://www.blog.highub.com/mobile-2/a-fix-for-iphone-viewport-scale-bug/
+      MBP.scaleFix();
+    </script>
+  	<script type="text/javascript" charset="utf-8" src="javascripts/phonegap.js"></script>
+  	<script type="text/javascript" charset="utf-8" src="javascripts/almplugin.js"></script>
+    <script type="text/javascript" charset="utf-8" src="javascripts/handlebars.js"></script>
+    <script type="text/javascript" charset="utf-8" src="javascripts/miscutils.js"></script>
+    <script type="text/javascript" charset="utf-8" src="javascripts/metrics.js"></script>
+  
+
+    <script id="video_detail_template" type="text/x-handlebars-template">
+        {{#video_detail}}
+          <div class='video_detail_container'>
+            <div class='video_detail_title'><p>{{title}}</p></div>
+            <div class='video_detail_player_container'>
+              {{#if vimeo}}
+              <iframe src="http://player.vimeo.com/video/{{vimeo_video_id}}" width="320" frameborder="0"></iframe>
+              {{/if}}
+              {{#if youtube}}
+                {{#if android}}
+                  <center>
+                    <a href="http://www.youtube.com/embed/{{yt_videoid}}">
+                      <img src="{{play_button_thumbnail}}">
+                    </a>
+                  </center>
+                {{else}}
+                  <object width="320" height="172">
+                    <param name="movie" value="{{videourl}}"></param>
+                    <param name="wmode" value="transparent"></param>
+                    <embed src="{{videourl}}" type="application/x-shockwave-flash" wmode="transparent" width="320" height="172"></embed>
+                  </object>
+                {{/if}}
+              {{/if}}
+              {{#if manual}}
+                <video src="{{videourl}}" width="320" height="242" preload controls></video>
+              {{/if}}
+              {{#if simple_link}}
+                <a href="{{videourl}}">
+                  <img src="{{play_button_thumbnail}}">
+                </a>
+              {{/if}}
+              {{#if use_embed}}
+                {{{flash_embed}}}
+              {{/if}}
+            </div>
+            <div class='video_detail_subtitle'><p>{{{subtitle}}}</p></div>
+          </div>
+        {{/video_detail}}
+      </ul>
+    </script>
+    
+    <script type="text/javascript" charset="utf-8">
+    	function onBodyLoad()
+    	{		
+    		document.addEventListener("deviceready",onDeviceReady,false);
+        
+        var video_detail_path = $.getQueryParam('d');
+        
+        var video_detail;
+        $.getJSON('data_feeds/'+video_detail_path, function(data) {
+          video_detail = data;
+          
+          video_detail = ALMMiscUtils.decodeUrisIn(data,"title","subtitle")
+          
+          if (video_detail.source == "vimeo")
+            video_detail.vimeo = true;
+          
+          if (video_detail.source == "youtube")
+            video_detail.youtube = true;
+            
+          if (video_detail.source == "manual")
+            video_detail.manual = true;
+          
+          if (video_detail.source == "facebook")
+            video_detail.simple_link = true;
+          
+          if (video_detail.source == "facebook_flash")
+            video_detail.use_embed = true;
+          
+          if (ALMMiscUtils.is_running_on_android())
+            video_detail.android = true;
+          else
+            video_detail.android = false;
+          
+          var source   = $("#video_detail_template").html();
+          var template = Handlebars.compile(source);
+          $("#content-placeholder").html(template({ video_detail: video_detail }));
+        });
+        
+
+
+    	}
+    	
+    	/* When this function is called, PhoneGap has been initialized and is ready to roll */
+    	/* If you are supporting your own protocol, the var invokeString will contain any arguments to the app launch.
+    	see http://iphonedevelopertips.com/cocoa/launching-your-own-application-via-a-custom-url-scheme.html
+    	for more details -jm */
+    	function onDeviceReady()
+    	{
+     	  ALMMetrics.recordPageView("video_detail");
+    	}    
+    </script>
+
+
+
+  </head>
+  <body class='nocallout' onload="onBodyLoad()">
+    <div id="content-placeholder">
+    </div>
+  </body>
+</html>

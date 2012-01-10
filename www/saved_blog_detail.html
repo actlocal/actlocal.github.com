@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+
+    <!-- Mobile IE allows us to activate ClearType technology for smoothing fonts for easy reading -->
+    <meta http-equiv="cleartype" content="on">
+  	    
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="stylesheets/vonnegut.css?v=1">
+   
+
+    <script id="blog_detail_template" type="text/x-handlebars-template">
+        {{#blog_detail}}
+          <div class='blog_detail'>
+            <div class='blog_detail_heading'>
+              <div class='blog_detail_date'>
+                <div class='blog_detail_date_month'>
+                  <p>{{month}}</p>
+                </div>
+                <div class='blog_detail_date_day'>
+                  <p>{{day}}</p>
+                </div>
+                <div class='blog_detail_date_tod'>
+                  3:43pm
+                </div>
+              </div>
+              <div class='blog_detail_info'>
+                <div class='blog_detail_title'>
+                  <p>{{title}}</p>
+                </div>
+                <div class='blog_detail_byline'>
+                  <p>{{author}}</p>
+                </div>
+              </div>
+            </div>
+            <div class='blog_body'>
+              {{{body}}}
+            </div>
+          </div>
+          <a class='delete-a-tag' href='#' onclick='delete_item();'>
+          <div id="delete-saved-item">
+            Tap To Delete This Saved Item
+          </div>
+          </a>
+
+        {{/blog_detail}}
+    </script>
+    
+    <script type="text/javascript" charset="utf-8">
+    	function onBodyLoad()
+    	{		
+    	  window.alm_sharable = {};
+    		document.addEventListener("deviceready",onDeviceReady,false);
+        
+        var blog_entry_path = $.getQueryParam('d');
+        window.alm_delete_path = blog_entry_path;
+        
+        var blog_entry;
+        $.getJSON(blog_entry_path, function(data) {
+          blog_entry = ALMMiscUtils.decodeUrisIn(data, "title","body","author");
+
+          window.alm_sharable.sharableURL = blog_entry.url;
+          window.alm_sharable.sharableTitle = blog_entry.title;      
+
+
+          var source   = $("#blog_detail_template").html();
+          var template = Handlebars.compile(source);
+          $("#content-placeholder").html(template({ blog_detail: blog_entry }));
+
+        });
+
+        
+    	}
+    	
+    	/* When this function is called, PhoneGap has been initialized and is ready to roll */
+    	/* If you are supporting your own protocol, the var invokeString will contain any arguments to the app launch.
+    	see http://iphonedevelopertips.com/cocoa/launching-your-own-application-via-a-custom-url-scheme.html
+    	for more details -jm */
+    	function onDeviceReady()
+    	{
+         window.plugins.almPlugin.setupSharableContent(window.plugins.almPlugin.ALMSharableURL, window.alm_sharable.sharableURL, window.alm_sharable.sharableTitle);
+    
+    	}
+    	
+    </script>
+    <script type="text/javascript" charset="utf-8">
+      
+      function delete_item()
+      {
+        
+        if (PhoneGap.available)
+        {
+          window.plugins.almPlugin.deleteSavedForDetail(window.alm_delete_path);            
+        } else {
+          alert("Would delete " + window.alm_delete_path);
+        }
+        event.stopPropagation();
+      }
+    </script>
+
+  </head>
+  <body class='nocallout' onload="onBodyLoad()">
+    <div id="content-placeholder">
+    </div>
+    
+    <script type="text/javascript" charset="utf-8" src="javascripts/jquery.js"></script>
+    <!-- scripts concatenated and minified via ant build script; mobile boilerplate -->
+    <script src="javascripts/boilerplate-helper.js"></script>
+    <!-- end concatenated and minified scripts-->
+    
+    <script>
+      // iPhone Scale Bug Fix, read this when using http://www.blog.highub.com/mobile-2/a-fix-for-iphone-viewport-scale-bug/
+      MBP.scaleFix();
+    </script>
+  
+  
+  	<script type="text/javascript" charset="utf-8" src="javascripts/phonegap.js"></script>
+  	<script type="text/javascript" charset="utf-8" src="javascripts/almplugin.js"></script>  
+    <script type="text/javascript" charset="utf-8" src="javascripts/handlebars.js"></script>
+    <script type="text/javascript" charset="utf-8" src="javascripts/miscutils.js"></script>
+  </body>
+</html>

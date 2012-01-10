@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+
+    <!-- Mobile IE allows us to activate ClearType technology for smoothing fonts for easy reading -->
+    <meta http-equiv="cleartype" content="on">
+  	    
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="stylesheets/vonnegut.css?v=1">
+   
+    <!-- All JavaScript at the bottom, except for Modernizr which enables HTML5 elements & feature detects -->
+        
+    <script type="text/javascript" charset="utf-8">
+    	function onBodyLoad()
+    	{		
+    		document.addEventListener("deviceready",onDeviceReady,false);
+
+        /* iphone-style switch from devgrow.com */    		
+      	$(".cb-enable").click(function(){
+      		var parent = $(this).parents('.switch');
+      		$('.cb-disable',parent).removeClass('selected');
+      		$(this).addClass('selected');
+      		$('.checkbox',parent).attr('checked', true);
+ 	    	  window.plugins.almPlugin.setPushNotificationsEnabled(true);
+      	});
+      	$(".cb-disable").click(function(){
+      		var parent = $(this).parents('.switch');
+      		$('.cb-enable',parent).removeClass('selected');
+      		$(this).addClass('selected');
+      		$('.checkbox',parent).attr('checked', false);
+ 	    	  window.plugins.almPlugin.setPushNotificationsEnabled(false);    	 
+
+      	});    		
+    	}
+    	
+    	/* When this function is called, this page is ready to run on device */
+    	function onDeviceReady()
+    	{
+    	}    
+    </script>
+  </head>
+  
+  <body class='nocallout' onload="onBodyLoad()">
+    <div id="about_content">
+      <h2>About Us</h2>
+      <div style='text-align: center;'>
+        <img src='images/alm_authors_logo.png' style=''>
+      </div>
+      <p>This app was created on the Act Local Authors Platform, an intuitive, affordable and efficient tool for anyone to build and manage apps for smartphones, tablets, e-readers and desktops.</p>
+
+      <p style='text-align:center'>Make your mark in mobile.
+        <br>Create your app today.
+      </p>
+      <a href='http://www.actlocalmedia.com/'>
+        <div id="about_visit_button"><p>Visit the <span style='font-weight: bold'>Act Local Authors Platform</span></p></div>
+      </a>
+      
+      <div style='text-align:center'>
+        <p>Brought to you by Act Local Media.</p>
+        <p style='font-weight:bold'>Liberating apps for everyone.</p>
+      </div>
+      <br>
+      <br>
+      <p  style='font-size:smaller'>Copyright &copy; 2011 Act Local, LLC. All Rights Reserved.</p>
+      <p  style='font-size:smaller'>Act Local, LLC is not responsible for the content of this app, which may be copyright the author or other parties, with express permission granted to the author for this use, if required.</p>
+    </div>
+    <script type="text/javascript" charset="utf-8" src="javascripts/jquery.js"></script>
+    <!-- scripts concatenated and minified via ant build script; mobile boilerplate -->
+    <script src="javascripts/boilerplate-helper.js"></script>
+    <!-- end concatenated and minified scripts-->
+    
+    <script>
+      // iPhone Scale Bug Fix, read this when using http://www.blog.highub.com/mobile-2/a-fix-for-iphone-viewport-scale-bug/
+      MBP.scaleFix();      
+    </script>
+  
+  
+  	<script type="text/javascript" charset="utf-8" src="javascripts/phonegap.js"></script>
+  	<script type="text/javascript" charset="utf-8" src="javascripts/almplugin.js"></script>
+    <script type="text/javascript" charset="utf-8" src="javascripts/handlebars.js"></script>
+    <script type="text/javascript" charset="utf-8" src="javascripts/miscutils.js"></script>
+
+
+  </body>
+</html>
